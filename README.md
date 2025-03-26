@@ -22,3 +22,9 @@ Convolution filtering functions using a Gaussian filter or a bandpass filter.
 **GaussianFilter:** This function takes as input a [1xN] vector x, which represents a signal, and a scalar sigma. It convolves x with a Gaussian with standard deviation sigma. The function outputs the resulting signal y.
 
 **BandPassFilter:** This function takes as input a [1 x N] vector x (the signal), a scalar Fs (the sampling frequency of the signal), a [1 x 2] vector freq_range (the low and high cut-off frequencies for the bandpass of the filter), and an integer W (the window size of the filter). The function creates the filter and applies it to create the output filtered signal y.
+
+## Audio signal processing
+
+**mixit:** Obtain a single-track audio recording by mixing the individual tracks of a multi-track audio recording according to the static weights.
+
+Consider a multi-track audio recording: a uint16 matrix of N columns where each column represents one track, e.g., the recording of one instrument of a band playing a song. The input range is between 0 and 65535, a value that a 16-bit analog digital converter would provide. This function takes the tracks and generates a weighted sum of them. The first input argument is a K-by-N matrix of uint16 values where N is the number of tracks and K is the number of samples per track. The second input argument is a vector of N double scalars representing the weights of the tracks. The output of the function is a K-element column vector of doubles representing a single-track audio recording obtained by mixing the individual tracks according to the static weights. Note that before any of the processing takes place, the audio data is be converted to standard interval of [-1 1]. That is, uint16 0 is mapped to -1, while 65535 becomes +1. The output is in the same range. If any element of the final mixed audio is outside of this range, the output is scaled.
